@@ -1,7 +1,45 @@
 h1 {
 font-family:"Lucida Console";
-color:black;
+color:white;
 margin:50px;
 padding:50px;
-border:50px solid blue;
+border:50px solid #2C3531;
+border-radius:80px;
+}
+#bodychat{
+color:white;
+border:50px solid #2C3531;
+border-radius: 80px;
+}
+
+
+#formtext{
+
+margin:50px;
+padding:50px;
+width:800px;
+
+}
+
+body{
+background-color: #116466;
+}
+
+
+input[type=text]{
+border-radius: 80px;
+
+
+}
+#buttonsubmit{
+font-family:"Lucida Console";
+color: white;
+border-radius:80px;
+padding: 50px;
+background-color:#DA7B93;
+}
+
+#imgbot{
+float:right
+
 }
