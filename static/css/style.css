@@ -1,5 +1,7 @@
 h1 {
 font-family:"Lucida Console";
 color:black;
-
+margin:50px;
+padding:50px;
+border:50px solid blue;
 }
