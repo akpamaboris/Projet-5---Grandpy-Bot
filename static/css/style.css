@@ -40,6 +40,21 @@ background-color:#DA7B93;
 }
 
 #imgbot{
-float:right
 
+}
+#chatresponse{
+background-color:#EDEAE5;
+border-radius:80px;
+width:500px;
+margin:120px;
+padding:20px;
+
+}
+
+p{
+font-family:"Lucida Console";
+color:#112D32;
+background-color:#6E6658;
+border:50px solid #6E6658;
+border-radius:80px;
 }
