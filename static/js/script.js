@@ -9,7 +9,7 @@ data : {
 message:$("#formtext").val()
 },
 type: "POST",
-url:'/processing'
+url:'/finalprocessing'
 })
 
 
@@ -20,11 +20,19 @@ $("#formtext").val('');
 
 //alert("yo there was an error");
 
-}else {
-$("#chatresponse").append("<p>"+data.message+"</p>");
+}else if (data.input_user && data.result_search && data.suggestion_search){
+$("#chatresponse").append("<p>"+ "ce que tu cherches est => " + data.input_user+"</p>");
+$("#chatresponse").append("<p>"+data.result_search+"</p>");
+$("#chatresponse").append("<p>" + "voici des suggestions qui pourront t'aider à trouver"+ " davantage d'informations sur ce que tu cherches : "+ " <br>"+data.suggestion_search+"</p>")
 $("#formtext").val('');
 
 //alert('yo i received something');
+
+}else{
+    $("#chatresponse").append("<p>"+ "ce que tu cherches est => " + data.input_user+ "<br>"+ "<br>"+" et malheuresement nous n'avons pas trouver d'informations sur ce que tu cherches " +"</p>" );
+    $("#chatresponse").append("<p>" + "voici des suggestions qui pourront t'aider à trouver"+" ce que tu cherches : "+ " <br>"+ " <br>"+data.suggestion_search+"</p>")
+    $("#formtext").val('');
+
 
 }
 
