@@ -14,6 +14,7 @@ Hey je voulais savoir ce qu'est la France
 
 stopWords= set(stopwords.words('french'))
 
+
 #je tokenize la phrase test, c'est à dire que je sépare une phrase, ou
 #un paragraphe dans des unités plus petites
 wordTokens = word_tokenize(examplePhrase)
