@@ -2,10 +2,16 @@ from flask import Flask, render_template, jsonify, request
 import wikipedia
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+import googlemaps
+from flask_googlemaps import GoogleMaps,Map
 
+#faire test google maps
+#faire test des mocks
 
 app=Flask(__name__)
 app.static_folder='static'
+app.config['GOOGLEMAPS_KEY'] = "AIzaSyCFRB_ipsZztDSGoRwKOsnhXiWOKzi2YyU"
+GoogleMaps(app)
 
 @app.route('/')
 def index():
@@ -130,8 +136,29 @@ def final_processing():
 		#j'initialise la librairie wikipedia pour des recherches en français
 		wikipedia.set_lang("fr")
 
+		#Je rentre ma clé d'API google maps dans la constante API_KEY
+		#ne pas afficher de clé sur github
+
+
+		API_KEY = 'AIzaSyCFRB_ipsZztDSGoRwKOsnhXiWOKzi2YyU'
+
+		#J'initialise mon objet map_client
+
+		map_client = googlemaps.Client(API_KEY)
+
+
+		response = map_client.find_place([searchRequest], input_type='textquery',
+										 fields=['formatted_address', 'photos', 'name', \
+												 'place_id', 'geometry/location/lng', 'geometry/location/lat'])
+
+		response_formatted_address = response['candidates'][0]['formatted_address']
+		response_latitude = response['candidates'][0]['geometry']['location']['lat']
+		response_longitude = response['candidates'][0]['geometry']['location']['lng']
+		response_html_attributions = response['candidates'][0]['photos'][0]['html_attributions']
+
 		#quoi qu'il se passe, que ça soit pour le try ou le except, je vais retourner un jsonify object
 		#avec les 3 fameuses variables
+
 
 		try:
 			#1- je m'occupe de la variable 1 => input_user
@@ -143,7 +170,7 @@ def final_processing():
 			#3 je m'occupe de la variable 3 => suggestion_search
 			suggestion_search = wikipedia.search(str(searchRequest), results=10, suggestion=True)
 
-			return jsonify({"input_user":input_user, "result_search": result_search, "suggestion_search": suggestion_search})
+			return jsonify({"input_user":input_user, "result_search": result_search, "suggestion_search": suggestion_search,"latitude":response_latitude, "longitude": response_longitude, "datacarte" :"datacarte"})
 		except:
 			#je ne retourne un objet qu'avec seulement 2 variables dans le cas de l'except
 
