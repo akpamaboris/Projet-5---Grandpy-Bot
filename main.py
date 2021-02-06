@@ -154,7 +154,7 @@ def final_processing():
 		response_formatted_address = response['candidates'][0]['formatted_address']
 		response_latitude = response['candidates'][0]['geometry']['location']['lat']
 		response_longitude = response['candidates'][0]['geometry']['location']['lng']
-		response_html_attributions = response['candidates'][0]['photos'][0]['html_attributions']
+		response_html_attributions = response['candidates'][0]['photos'][0]['html_attributions'][0]
 
 		#quoi qu'il se passe, que ça soit pour le try ou le except, je vais retourner un jsonify object
 		#avec les 3 fameuses variables
@@ -170,7 +170,7 @@ def final_processing():
 			#3 je m'occupe de la variable 3 => suggestion_search
 			suggestion_search = wikipedia.search(str(searchRequest), results=10, suggestion=True)
 
-			return jsonify({"input_user":input_user, "result_search": result_search, "suggestion_search": suggestion_search,"latitude":response_latitude, "longitude": response_longitude, "datacarte" :"datacarte"})
+			return jsonify({"input_user":input_user, "result_search": result_search, "suggestion_search": suggestion_search,"latitude":response_latitude, "longitude": response_longitude, "datacarte" :str(response_html_attributions)})
 		except:
 			#je ne retourne un objet qu'avec seulement 2 variables dans le cas de l'except
 

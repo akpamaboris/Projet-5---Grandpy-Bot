@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GrandPy Bot</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            font: 12px sans-serif;
+        }
+        h1, p {
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Grandpy Bot</h1>
+<div class="maps">
+    <div class="map"></div>
+</div>
+<p id="parg">
+
+<input type="text" id="textInput">
+<input type="button" class="add-map" value="Add Map" id="buttonid">
+</p>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>`
+
+<script type="text/javascript"
+src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing">
+</script>
+  <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFRB_ipsZztDSGoRwKOsnhXiWOKzi2YyU&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    jQuery( function( $ )
+    {
+
+
+        var i = 1;
+
+        //  initMap( $( '.map' ) );
+
+        function initMap( $map, lat,lng )
+        {
+            var myOptions = {
+                center: new google.maps.LatLng( lat, lng ),
+                zoom: 14,
+
+            };
+
+
+            var drawingManager = new google.maps.drawing.DrawingManager();
+            var map = new google.maps.Map( $map[0], myOptions );
+            drawingManager.setMap( map );
+
+                                const marker = new google.maps.Marker({
+                    position : new google.maps.LatLng( lat, lng ),
+                                    map: map
+
+
+                })
+        }
+
+
+
+        $( 'body' ).on( 'click', '.add-map', function()
+        {
+        //alert('click on body');
+            /*
+            i++;
+            $( '.maps' ).append( '<div class="map-' + i + '" style="width: 800px; height: 500px;"></div>' );
+            initMap( $( '.map-' + i ) );
+
+            */
+                    $.ajax({
+            data: {
+                message:"hey this is my message",
+                message_deux : $('#textInput').val()
+            },
+            type: "POST",
+            url: '/processing',
+
+
+        })
+
+
+            .done(function(data){
+
+                if (data.retmessage == "worked"){
+                    alert('it worked');
+                    //$('#parg').append('<p>'+ data.retmessage+'</p>')
+                    lattitude_resp = data.latitude;
+                    longitude_resp = data.longitude;
+                                i++;
+
+            $( '.maps' ).append( '<div class="map-' + i + '" style="width: 800px; height: 500px;"></div>' );
+                           $('.maps').append("<p>"+data.result_search +"</p>");
+
+            initMap( $( '.map-' + i ),lattitude_resp, longitude_resp );
+
+                }else{
+
+                $('body').append(data.suggestion_search)
+
+                }
+
+
+
+                })
+
+        } );
+
+
+
+
+
+
+    } );
+</script>
+</body>
+</html>

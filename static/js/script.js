@@ -30,14 +30,54 @@ $("#formtext").val('');
 $("#chatresponse").append("<p>"+ "ce que tu cherches est => " + data.input_user+"</p>");
 $("#chatresponse").append("<p>"+data.result_search+"</p>");
 
-// J' affiche la carte entre ces deux commentaires
 
-map = new google.maps.Map(document.getElementById('displaycard'), {
+//1 - je commence ma fonctionnalité d'incrémentation
+// elle fonctionne car je l'ai testé avec un alert
+rowNum++;
+
+//2- je crée un nouvel élément avec la fonctionnalité d'incrémentation
+var row = $("<div id='newmap-"+rowNum+"' class='address' />");
+
+//3- je crée la variable sous forme de string
+//ça fonctionne j'ai vérifié
+var variablemap = '#newmap-'+rowNum;
+
+//4 je vérifie qu'elle fonctionne avec un console.log
+//ça fonctionne j'ai vérifié
+
+console.log(variablemap);
+
+//5 je vérifie qu'elle fonctionne avec un alert
+//ça fonctionne j'ai vérifié
+
+alert(variablemap);
+
+
+
+
+// je rajoute cet élément à l'id Chat response
+//ça fonctionne j'ai vérifié
+$("#chatresponse").append(row);
+$(variabemap).html(data.datacarte)
+
+// J' affiche la carte entre ces deux commentaires
+//je teste si la variable que je viens de créer
+// => variablemap fonctionne dynamiquement
+/*
+new GMaps({
+  div: variablemap,
+  lat: -12.043333,
+  lng: -77.028333
+});
+*/
+/*
+map = new google.maps.Map(document.getElementById('dispnlaycard'), {
   center: {lat:data.latitude, lng: data.longitude},
   zoom: 8
-});
+});*/
 
 // affichage de la carte finit
+
 
 
 $("#chatresponse").append("<p>" + "voici des suggestions qui pourront t'aider à trouver"+ " davantage d'informations sur ce que tu cherches : "+ " <br>"+data.suggestion_search+"</p>")
