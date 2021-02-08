@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>Chat</title>
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 
@@ -12,7 +18,10 @@
 
 </head>
 <body>
-
+<div class="jumbotron text-center">
+  <h1>GrandPy Bot</h1>
+  <p>Tu lui poses des questions, il te répond.</p>
+</div>
 
 <h1>Grandpy Bot <img id="imgbot" src="{{url_for('static', filename='image/robot.png')}}" alt="c'est le grandpy robot" height="100" width="50">
 </h1>

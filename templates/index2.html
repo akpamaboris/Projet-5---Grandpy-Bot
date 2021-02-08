@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>GrandPy Bot</title>
+      <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>    <title>GrandPy Bot</title>
 
     <style>
 
@@ -19,15 +23,30 @@
     </style>
 </head>
 <body>
-<h1>Grandpy Bot</h1>
+
+<div class="jumbotron text-center">
+  <h1>GrandPy Bot</h1>
+  <p>Tu lui poses des questions, il te répond.</p>
+</div>
+<div class="container">
+
 <div class="maps">
     <div class="map"></div>
 </div>
 <p id="parg">
 
-<input type="text" id="textInput">
-<input type="button" class="add-map" value="Add Map" id="buttonid">
+
+    <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Demandes ce que tu veux</span>
+  </div>
+  <textarea class="form-control" aria-label="With textarea" id="textInput"></textarea>
+</div>
+
+    <button type="button" class="btn btn-primary" id="butoned">Envoyes à Grandpa</button>
 </p>
+
+    </div>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>`
 
 <script type="text/javascript"
@@ -71,7 +90,7 @@ src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing">
 
 
 
-        $( 'body' ).on( 'click', '.add-map', function()
+        $('body').on( 'click', '#butoned', function()
         {
         //alert('click on body');
             /*
