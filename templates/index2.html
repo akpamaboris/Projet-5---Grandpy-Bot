@@ -92,7 +92,7 @@ src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing">
 
         $('body').on( 'click', '#butoned', function()
         {
-        //alert('click on body');
+        alert('click on body');
             /*
             i++;
             $( '.maps' ).append( '<div class="map-' + i + '" style="width: 800px; height: 500px;"></div>' );
@@ -121,13 +121,13 @@ src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing">
                                 i++;
 
             $( '.maps' ).append( '<div class="map-' + i + '" style="width: 800px; height: 500px;"></div>' );
-                           $('.maps').append("<p>"+data.result_search +"</p>");
+                           $('.maps').append("<p>"+data.result_search +"</p><br>");
 
             initMap( $( '.map-' + i ),lattitude_resp, longitude_resp );
 
                 }else{
 
-                $('body').append(data.suggestion_search)
+                $('.maps').append("Si on a des suggestions elles s'afficheront à la ligne suivante "+"<br>"+data.suggestion_search);
 
                 }
 

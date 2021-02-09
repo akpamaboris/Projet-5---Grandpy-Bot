@@ -6,6 +6,11 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import wikipedia
 
+#faire les tests pour le parser, google maps et wikipedia
+#faire un peu plus de peaufinement frontend
+#afficher d'abord l'adresse, puis la descriptionx avec le lien wikipedia puis la map à la fin
+
+#rajouter des except
 
 app = Flask(__name__)
 
@@ -20,56 +25,62 @@ def processing():
 
     if newmessage:
 
+        try:
 
-        # Je commence à m'occuper des cartes
-        API_KEY = 'AIzaSyCFRB_ipsZztDSGoRwKOsnhXiWOKzi2YyU'
 
-        map_client = googlemaps.Client(API_KEY)
-        # Je specifie que les stopwords sont en français
-        stopWords = set(stopwords.words("french"))
+            # Je commence à m'occuper des cartes
+            API_KEY = 'AIzaSyCFRB_ipsZztDSGoRwKOsnhXiWOKzi2YyU'
 
-        # je tokenize la phrase, c'est à dire que je sépare une phrase
-        # en de plus petits éléments
-        wordTokens = word_tokenize(newmessage)
+            map_client = googlemaps.Client(API_KEY)
+            # Je specifie que les stopwords sont en français
+            stopWords = set(stopwords.words("french"))
 
-        # je crée une liste vide pour pouvoir stocker la phrase une fois que les stop words
-        # auront étés enlevés de celle ci
-        phrase_avec_filtre = []
+            # je tokenize la phrase, c'est à dire que je sépare une phrase
+            # en de plus petits éléments
+            wordTokens = word_tokenize(newmessage)
 
-        # Je crée une boucle avec la variable w pour repérer les éléments qu'il y  a dans
-        # ma requête tokénisée qui ne sont pas dans les stop words en français
-        # ce procédé permet de filtrer tous les stop words afin de recueuillir une requête
-        # filtrée sous forme de liste
+            # je crée une liste vide pour pouvoir stocker la phrase une fois que les stop words
+            # auront étés enlevés de celle ci
+            phrase_avec_filtre = []
 
-        for w in wordTokens:
-            if w not in stopWords:
-                phrase_avec_filtre.append(w)
+            # Je crée une boucle avec la variable w pour repérer les éléments qu'il y  a dans
+            # ma requête tokénisée qui ne sont pas dans les stop words en français
+            # ce procédé permet de filtrer tous les stop words afin de recueuillir une requête
+            # filtrée sous forme de liste
 
-        # je convertis cette liste alors tous juste créée en un élément string
-        full_str = " ".join([str(elem) for elem in phrase_avec_filtre])
+            for w in wordTokens:
+                if w not in stopWords:
+                    phrase_avec_filtre.append(w)
 
-        # je commence à préparer mon opération de cherchage
-        searchRequest = str(full_str)
+            # je convertis cette liste alors tous juste créée en un élément string
+            full_str = " ".join([str(elem) for elem in phrase_avec_filtre])
 
-        # j'initialise la librairie wikipedia pour des recherches en français
-        wikipedia.set_lang("fr")
+            # je commence à préparer mon opération de cherchage
+            searchRequest = str(full_str)
 
-        input_user = str(searchRequest)
+            # j'initialise la librairie wikipedia pour des recherches en français
+            wikipedia.set_lang("fr")
 
-        response = map_client.find_place([input_user], input_type='textquery',
-                                         fields=['formatted_address', 'photos', 'name', \
-                                                 'place_id', 'geometry/location/lng', 'geometry/location/lat'])
+            input_user = str(searchRequest)
 
-        # placeid_response = response['candidates'][0]['place_id']
-        pprint(response)
+            response = map_client.find_place([input_user], input_type='textquery',
+                                             fields=['formatted_address', 'photos', 'name', \
+                                                     'place_id', 'geometry/location/lng', 'geometry/location/lat'])
 
-        # print(placeid_response)
-        response_formatted_address = response['candidates'][0]['formatted_address']
-        response_latitude = response['candidates'][0]['geometry']['location']['lat']
-        response_longitude = response['candidates'][0]['geometry']['location']['lng']
-        response_html_attributions = response['candidates'][0]['photos'][0]['html_attributions']
+            # placeid_response = response['candidates'][0]['place_id']
+            pprint(response)
 
-        print('new message is', newmessage)
+            # print(placeid_response)
+            response_formatted_address = response['candidates'][0]['formatted_address']
+            response_latitude = response['candidates'][0]['geometry']['location']['lat']
+            response_longitude = response['candidates'][0]['geometry']['location']['lng']
+            response_html_attributions = response['candidates'][0]['photos'][0]['html_attributions']
+
+            print('new message is', newmessage)
+
+
+        except:
+            return jsonify({"retmessage": "suggest", "suggestion_search": "désolé on a rien trouvé", "input_user": input_user})
 
         try:
             # 1- je m'occupe de la variable 1 => input_user
@@ -91,9 +102,14 @@ def processing():
             # 1- Je m'occupe de la variable 1 => input_user
             input_user = newmessage
 
-            # 2 - je m'occupe de la variable 3=> suggestion search
-            suggestion_search = wikipedia.search(str(searchRequest), results=10, suggestion=True)
-            return jsonify({"retmessage":"suggest","suggestion_search": suggestion_search, "input_user": input_user})
+            if suggestion_search:
+
+                # 2 - je m'occupe de la variable 3=> suggestion search
+                suggestion_search = wikipedia.search(str(searchRequest), results=10, suggestion=True)
+                return jsonify({"retmessage":"suggest","suggestion_search": suggestion_search, "input_user": input_user})
+            else:
+                return jsonify({"retmessage":"suggest","suggestion_search": "désolé on a rien trouvé", "input_user": input_user})
+
 
 
 
